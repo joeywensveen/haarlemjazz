@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+th{
+  text-align:left;
+  padding-right:20px;
+}
+
+td{
+  padding-right:20px;
+  max-width:200px;
+}
+.red{
+  color:red;
+}
+
+
+.checkButton{
+  padding:10px;
+  background-color:aquamarine;
+  border-radius:5px;
+  box-shadow: 2px 2px 2px #244835;
+  border:none;
+}
+
+.checkButton:hover{
+  background-color:greenyellow;
+  cursor:pointer;
+}
