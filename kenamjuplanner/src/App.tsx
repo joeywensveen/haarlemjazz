@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import AddTaskBox from "./AddTaskBox";
@@ -34,18 +34,31 @@ function App() {
       });
   }, []);
 
+  function completeTask(taskId: number, uitvoerder: number){
+    
+    axios.put(`http://localhost:3000/updatetask/${taskId}/${uitvoerder}`)
+    .then((res) => console.log(res))
+    .catch((error)=> {console.log(error)})
+  }
+
+
   function toggleAddTask() {
     setShowAddTaskBox((prev) => !prev);
     console.log(showAddTaskBox);
   }
+  
+  function updateUitvoerder(e:React.FormEvent, taskId:number, ){
+    let uitvoerder:string = e.target.value
+    setTaskList(taskList.map((task)=> task.id == taskId? {...task, uitvoerder: uitvoerder} : {...task}))
+  }
 
   const usersOptionsHtml = userList.map((user) => (
-    <option key={user.ID}>{user.Name}</option>
+    <option value={user.ID} key={user.ID}>{user.Name}</option>
   ));
 
   return (
     <div>
-      {showAddTaskBox ? <AddTaskBox></AddTaskBox> : <p></p>}
+      {showAddTaskBox? <AddTaskBox /> : <p></p>}
       <div className="p-5 bg-orange-50 rounded w-1/2 m-auto mt-20">
         <button
           onClick={toggleAddTask}
@@ -57,7 +70,7 @@ function App() {
           <thead>
             <tr>
               <th className="text-orange-500">Taak</th>
-              <th>Uitgevoerd</th>
+              <th>Uitvoertijd</th>
               <th>Uitvoerder ID</th>
               <th>Uitvoerder</th>
             </tr>
@@ -69,10 +82,10 @@ function App() {
                 <td>{task.uitvoertijd}</td>
                 <td>{task.uitvoerder}</td>
                 <td>
-                  <select>{usersOptionsHtml}</select>
+                  <select onChange={(e) => updateUitvoerder(e, task.id)}>{usersOptionsHtml}</select>
                 </td>
                 <td>
-                  <button className="checkButton">Gedaan</button>
+                  <button id={task.id.toString()} onClick={completeTask(task.id, task.uitvoerder)} className="checkButton">Gedaan</button>
                 </td>
               </tr>
             ))}

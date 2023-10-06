@@ -23,6 +23,8 @@ var db = mysql.createConnection({
 const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const d = new Date();
 let day = d.getDay();
+let currentTime = (d.getUTCHours()+2).toString() + ":" + d.getUTCMinutes().toString() + ":" + d.getUTCSeconds().toString()
+console.log( currentTime)
 today = weekday[day]
 
 console.log(today)
@@ -51,6 +53,16 @@ db.connect(function (err) {
     app.get("/users", (req,res)=>{
         const sql = `SELECT * FROM students`
         db.query(sql,(err,data) =>{
+            if(err) return res.json(err)
+            const result = data
+            res.json(result)
+        })
+    })
+
+    app.put("/updatetask/:taskid/:uitvoerder", (req,res)=>{
+        let taskId =  req.params.taskid
+        let uitvoerder = parseInt(req.params.uitvoerder)
+        db.query(`UPDATE tasks SET uitvoertijd = '${currentTime}', uitvoerder = ${uitvoerder} WHERE id = '${taskId}'`, (err,data)=>{
             if(err) return res.json(err)
             const result = data
             res.json(result)
