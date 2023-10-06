@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+body{
+  background-color:darkslategrey;
+}
 
 th{
   text-align:left;
@@ -29,4 +31,19 @@ td{
 .checkButton:hover{
   background-color:greenyellow;
   cursor:pointer;
+}
+
+form>input{
+  margin-bottom:10px;
+}
+
+h2{
+  font-size:x-large;
+  font-weight:700;
+  color:darkgreen;
+}
+h3{
+  font-size: large;
+  font-weight: 700;
+  padding-top: 10px;
 }

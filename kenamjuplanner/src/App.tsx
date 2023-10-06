@@ -47,8 +47,8 @@ function App() {
     console.log(showAddTaskBox);
   }
   
-  function updateUitvoerder(e:React.FormEvent, taskId:number, ){
-    let uitvoerder:string = e.target.value
+  function updateUitvoerder(e:React.FormEvent<HTMLInputElement>, taskId:number, ){
+    let uitvoerder:string = e.currentTarget.value
     setTaskList(taskList.map((task)=> task.id == taskId? {...task, uitvoerder: uitvoerder} : {...task}))
   }
 
@@ -59,17 +59,17 @@ function App() {
   return (
     <div>
       {showAddTaskBox? <AddTaskBox /> : <p></p>}
-      <div className="p-5 bg-orange-50 rounded w-1/2 m-auto mt-20">
+      <div className="p-5 bg-stone-100 rounded w-1/2 m-auto mt-20">
         <button
           onClick={toggleAddTask}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5"
         >
           New Task
         </button>
         <table>
           <thead>
             <tr>
-              <th className="text-orange-500">Taak</th>
+              <th>Taak</th>
               <th>Uitvoertijd</th>
               <th>Uitvoerder ID</th>
               <th>Uitvoerder</th>
