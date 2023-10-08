@@ -22,7 +22,6 @@ function App() {
   const [userList, setUserList] = useState<any[]>([]);
   const [showAddTaskBox, setShowAddTaskBox] = useState<boolean>(false);
 
-  console.log(displayDay);
   useEffect(() => {
     axios
       .get("http://localhost:3000/tasks")
@@ -42,6 +41,7 @@ function App() {
   }, [taskList]);
 
   function completeTask(taskId: number, uitvoerder: string) {
+    console.log(uitvoerder);
     axios
       .put(`http://localhost:3000/updatetask/${taskId}/${uitvoerder}`)
       .then((res) => console.log(res))
@@ -52,7 +52,6 @@ function App() {
 
   function toggleAddTask() {
     setShowAddTaskBox((prev) => !prev);
-    console.log(showAddTaskBox);
   }
 
   function updateUitvoerder(
@@ -74,9 +73,9 @@ function App() {
   ));
 
   return (
-    <div>
-      {showAddTaskBox ? <AddTaskBox /> : <p></p>}
-      <div className="p-5 bg-stone-100 rounded w-1/2 m-auto mt-20 min-w-fit">
+    <div className={showAddTaskBox ? "overlay" : ""}>
+      {showAddTaskBox ? <AddTaskBox toggleTask={toggleAddTask} /> : <p></p>}
+      <div className="p-5 bg-stone-100 rounded w-1/2 m-auto mt-20 min-w-fit z-0">
         <button
           onClick={toggleAddTask}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5"
@@ -94,8 +93,8 @@ function App() {
           </thead>
           <tbody>
             {taskList.map((task) => (
-              <tr key={task.id}>
-                <td>{task.taak}</td>
+              <tr className="items-center" key={task.id}>
+                <td className="align-middle">{task.taak}</td>
                 <td>{task.uitvoertijd}</td>
                 <td>{task.uitvoerder}</td>
                 <td>
@@ -110,11 +109,11 @@ function App() {
                     <p>not completed</p>
                   )}
                 </td>
-                <td>
+                <td className="items-center h-20">
                   <button
                     id={task.id.toString()}
                     onClick={() => completeTask(task.id, task.uitvoerder)}
-                    className="checkButton"
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-5 m-5"
                   >
                     Gedaan
                   </button>

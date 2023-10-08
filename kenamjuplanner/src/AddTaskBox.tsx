@@ -1,8 +1,9 @@
 import React, { ButtonHTMLAttributes, InputHTMLAttributes } from "react";
 import { useState } from "react";
 import axios from "axios";
+import Cross from "./cross";
 
-export default function AddTaskBox() {
+export default function AddTaskBox(props: any) {
   const [taskDays, setTaskDays] = useState<Set<number>>(new Set());
   const [taskTime, setTasktime] = useState("00:00");
   const [task, setTask] = useState("");
@@ -59,12 +60,18 @@ export default function AddTaskBox() {
   }
 
   return (
-    <div className="rounded-xl left-0 right-0 w-1/2 h-1/2 top-1/4 m-auto absolute bg-blue-50 p-10 min-w-fit min-h-max">
+    <div className="rounded-xl left-0 right-0 w-1/2 top-1/4 m-auto absolute bg-blue-50 p-10 min-w-fit">
       <div className="">
+        <div
+          onClick={props.toggleTask}
+          className="absolute top-5 right-5 bg-blue-800 w-10 h-10 rounded"
+        >
+          <Cross />
+        </div>
         <h2>Add a task</h2>
         <form action="/addtask">
           <h3>Select a day</h3>
-          <div className="flex w-100 justify-start items-center gap-5 flex-wrap ">
+          <div className="flex w-100 justify-start items-center gap-5 flex-wrap">
             {[0, 1, 2, 3, 4, 5, 6].map((i: number) => (
               <div key={i}>
                 <input
